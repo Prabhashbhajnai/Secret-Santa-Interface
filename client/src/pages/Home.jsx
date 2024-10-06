@@ -1,13 +1,24 @@
-import React from 'react'
+import { useState } from 'react'
 
 // Assets
 import home_bg from '../assets/home_bg.svg'
 import Footer from '../components/Footer'
+import CreateOrJoinModal from '../components/CreateOrJoinModal'
 
 const Home = () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [type, setType] = useState('')
+
     return (
         <>
-            <div className="h-screen w-full flex flex-col items-center justify-center bg-cover bg-center" style={{ backgroundImage: `url(${home_bg})`, fontFamily: '"Dancing Script", cursive' }} >
+            {isOpen &&
+                <div
+                    className='h-screen w-full backdrop-filter backdrop-blur-sm bg-opacity-40 bg-gray-800 absolute z-10'
+                    onClick={() => setIsOpen(false)}
+                />
+            }
+
+            <div className='h-screen w-full flex flex-col items-center justify-center bg-cover bg-center' style={{ backgroundImage: `url(${home_bg})`, fontFamily: '"Dancing Script", cursive' }} >
 
                 {/* Glass effect background */}
                 <div className='w-2/3 bg-gray-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40'>
@@ -20,17 +31,36 @@ const Home = () => {
 
                         <div className='flex justify-around w-full mt-5'>
                             <div className='flex flex-col gap-3'>
-                                <p className='text-2xl'>Create a new group for Secret Santa</p>
-                                <button className='w-full h-12 text-3xl bg-green-500 hover:bg-green-600 text-white rounded-md'>Create Room</button>
+                                <p className='text-2xl'>Create a new room for Secret Santa</p>
+                                <button
+                                    className='w-full h-12 text-3xl bg-green-500 hover:bg-green-600 text-white rounded-md'
+                                    onClick={() => { setIsOpen(true); setType('create') }}
+                                >
+                                    Create Room
+                                </button>
                             </div>
 
                             <div className='flex flex-col gap-3'>
-                                <p className='text-2xl'>Join an existing group for Secret Santa</p>
-                                <button className='w-full h-12 text-3xl bg-green-500 hover:bg-green-600 text-white rounded-md'>Join a Room</button>
+                                <p className='text-2xl'>Have a code? Join an existing room</p>
+                                <button
+                                    className='w-full h-12 text-3xl bg-green-500 hover:bg-green-600 text-white rounded-md'
+                                    onClick={() => { setIsOpen(true); setType('join') }}
+                                >
+                                    Join a Room
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+                {isOpen &&
+                    <CreateOrJoinModal
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        type={type}
+                    />
+                }
             </div>
         </>
     )
