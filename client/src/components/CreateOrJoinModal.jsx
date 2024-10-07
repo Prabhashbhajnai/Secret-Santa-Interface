@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react"
+import { useNavigate } from 'react-router-dom'
 
 const CreateOrJoinModal = ({ isOpen, setIsOpen, type }) => {
     const [isDisabled, setIsDisabled] = useState(true)
 
     const codeRef = useRef(null)
     const nameRef = useRef(null)
+
+    const navigate = useNavigate()
 
     const handleChange = () => {
         if (codeRef.current.value.length === 11) {
@@ -14,12 +17,12 @@ const CreateOrJoinModal = ({ isOpen, setIsOpen, type }) => {
         }
     }
 
-    const handleJoin = () => {
-
+    const handleCreate = () => {
+        navigate('/abc-def-ghi', { state: { name: nameRef.current.value, type: "host" } })
     }
 
-    const handleCreate = () => {
-
+    const handleJoin = () => {
+        navigate('/abc-def-ghi', { state: { name: "" } })
     }
 
     useEffect(() => {
@@ -46,9 +49,14 @@ const CreateOrJoinModal = ({ isOpen, setIsOpen, type }) => {
                                 className='w-full h-10 bg-gray-300 rounded-md my-3 px-2 py-1 text-black  text-lg font-sans'
                                 placeholder='Code'
                                 onChange={handleChange}
-                                onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false)}
+                                onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false) || e.key === 'Enter' && handleJoin()}
                             />
-                            <button className={`w-1/3 h-10 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold text-2xl ${isDisabled && 'bg-slate-400 hover:bg-slate-400 cursor-not-allowed'}`}>Join</button>
+                            <button
+                                className={`w-1/3 h-10 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold text-2xl ${isDisabled && 'bg-slate-400 hover:bg-slate-400 cursor-not-allowed'}`}
+                                onClick={handleJoin}
+                            >
+                                Join
+                            </button>
                         </div>
                     </>
                 ) : (
@@ -62,12 +70,13 @@ const CreateOrJoinModal = ({ isOpen, setIsOpen, type }) => {
                                 type='text'
                                 className='w-full h-10 mt-1 bg-gray-300 rounded-md px-2 py-1 text-black  text-lg font-sans'
                                 placeholder='Name'
-                                onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false)}
+                                onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false) || e.key === 'Enter' && handleCreate()}
                             />
                         </div>
 
                         <button
                             className='w-full h-10 bg-green-500 hover:bg-green-600 text-white rounded-md font-semibold text-2xl'
+                            onClick={handleCreate}
                         >
                             Create
                         </button>

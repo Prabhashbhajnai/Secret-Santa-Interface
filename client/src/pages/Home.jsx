@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
 // Assets
-import home_bg from '../assets/home_bg.svg'
-import Footer from '../components/Footer'
 import CreateOrJoinModal from '../components/CreateOrJoinModal'
 
 const Home = () => {
@@ -18,7 +16,7 @@ const Home = () => {
                 />
             }
 
-            <div className='h-screen w-full flex flex-col items-center justify-center bg-cover bg-center' style={{ backgroundImage: `url(${home_bg})`, fontFamily: '"Dancing Script", cursive' }} >
+            <div className='h-screen w-full flex flex-col items-center justify-center'>
 
                 {/* Glass effect background */}
                 <div className='w-2/3 bg-gray-800 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-40'>
